@@ -29,7 +29,8 @@ New-Item -ItemType Junction -Path "$HOME\.claude\skills\animate" -Target "<repo>
   nothing is renamed. A film's snapshot may run ahead of this copy; the harvest ports fixes back.
 - Test every change on a copy of the smoke project, not in place (its `build/` and `output/` are ignored):
   ```bash
-  export PYTHONPATH="$PWD/kit"; T=$(mktemp -d); cp -r projects/_smoke/{assets,project.json,shots.py} "$T/"
+  export PYTHONPATH="$PWD/kit"; T=$(mktemp -d); cp projects/_smoke/{project.json,shots.py} "$T/"
+  python projects/_smoke/make_assets.py "$T"
   python -m animkit.render "$T" stills 1:0.5 2:50% && python -m animkit.render "$T" all --workers 2 \
     && python -m animkit.mix "$T" && python -m animkit.finish "$T"
   ```
@@ -51,7 +52,7 @@ New-Item -ItemType Junction -Path "$HOME\.claude\skills\animate" -Target "<repo>
 
 It may become public. Never commit personal information: no absolute paths with a user name (use `~`, `$REPO`,
 relative paths), no emails, no names of private people, no credentials. Generated media, renders and caches stay
-out of git (see `.gitignore`). Before pushing, scan:
+out of git (see `.gitignore`): no model output is committed, not even benchmark inputs. Before pushing, scan:
 
 ```bash
 git grep -n -I -i -E 'users[/\\][a-z0-9]+|@gmail|@[a-z0-9-]+\.(com|ro)|api[_-]?key|token|password' -- . ':!*.lock'

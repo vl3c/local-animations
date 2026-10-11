@@ -10,8 +10,8 @@ output/
 # Local Claude Code settings
 .claude/settings.local.json
 
-# Benchmarks: sources only. Generated assets, renders and evaluation media stay local.
-projects/*/assets/
-!projects/_smoke/assets/
+# Nothing generated is tracked: assets, renders and evaluation media stay local.
+# The smoke project makes its assets with make_assets.py.
+projects/**/assets/
 projects/_eval_*/*
 !projects/_eval_*/*.md
