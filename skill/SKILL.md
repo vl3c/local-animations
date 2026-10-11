@@ -31,6 +31,10 @@ export PYTHONPATH="$REPO/kit"
 
 Python 3.13 with pycairo, numpy, OpenCV, Pillow, scipy, soundfile and pyloudnorm; ffmpeg on PATH.
 
+The asset tools are separate skills, each from its own repository: local-voice, local-music, local-image,
+local-sounds and local-gpu (github.com/vl3c/<name>). If one is missing from `~/.claude/skills/`, tell the user
+and point them to its repository's install section; don't improvise a substitute or use a cloud service.
+
 ## Where the work starts (entry modes)
 
 | The user gives you | Start at | Notes |
