@@ -27,5 +27,6 @@ See [CLAUDE.md](CLAUDE.md). Start with [skill/SKILL.md](skill/SKILL.md).
 
 ## Licence
 
-Not chosen yet. The models used for assets have their own licences (several are non-commercial); see
-`skill/workflow/2-assets.md`.
+The code and documentation are [MIT](LICENSE). The generated media in `projects/` (voice, images, sound effects of
+the benchmark inputs) fall under the licences of the models that made them, several of which are non-commercial
+only; see `skill/workflow/2-assets.md`.
