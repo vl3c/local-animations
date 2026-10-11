@@ -18,10 +18,14 @@ ffmpeg -i "output/<Title>.mp4" -c:v libx264 -crf 26 -preset slow -c:a aac -b:a 1
 ```
 
 - CRF 16 with fine grain runs about 73 Mbit/s (3.5 GB for 6.5 min): fine for YouTube and X Premium (16 GB), close
-  to Facebook's 4 GB.
+  to Facebook's 4 GB. Grain 0.03 plus a per-frame flicker ran 110 Mbit/s (288 MB for 21 s, Puff Ahoy): send the
+  preview copy for messaging apps.
 - **No AI credits or tool logos** unless asked.
 - **Before any cleanup, keep everything the final is built from.** A cleanup once removed the music request a later
   tweak needed. When deleting drafts, update the README so its paths stay true.
+- **"Clean up the intermediates"** means what is regenerated or superseded: `build/` (600 MB for 21 s), `output/stills/`,
+  cut-outs replaced by better ones, and measuring crops. Drafts, takes, checkpoint sheets and `source/` stay
+  (Puff Ahoy: 1.2 GB down to 0.6 GB).
 - Your final message is the report: what you made, where, the checks, deliberate warnings, what you couldn't do.
 
 ## The harvest

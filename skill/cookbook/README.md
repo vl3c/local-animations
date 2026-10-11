@@ -12,5 +12,8 @@ starting points; make them the film's own. Add new ones during the [harvest](../
 | [plate-overlays](plate-overlays.md) | overlays that fit a generated plate: measured positions, masks, camera-locked drawing, halos over line art | cartoon, comedy, any plate-based | Lantern Cantor |
 | [instability-glitch](instability-glitch.md) | a data-driven glitch pass with intensity levels and protected windows | cyberpunk, machine, glitch | Initial Condition |
 | [palette-rules](palette-rules.md) | checking and guarding palette rules (forbidden hues, rationed colours) | any with colour rules | Initial Condition |
+| [cel-animation](cel-animation.md) | characters as generated cut-out cels: pose variants by edits, a matrix compositor, replacement timing, riders on a vehicle, eye darts | cartoon, comedy, rubber-hose | Puff Ahoy |
+| [vintage-film](vintage-film.md) | two-strip colour grade, gate weave, flicker, iris in and out, true black at the end | cartoon, vintage | Puff Ahoy |
 
-Style tags in use: `painterly`, `atmospheric`, `cartoon`, `comedy`, `cyberpunk`, `machine`, `glitch`, `any`.
+Style tags in use: `painterly`, `atmospheric`, `cartoon`, `comedy`, `rubber-hose`, `vintage`, `cyberpunk`, `machine`,
+`glitch`, `any`.

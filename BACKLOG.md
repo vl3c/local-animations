@@ -5,10 +5,9 @@ the evidence is noted per item. Add new items during a film's harvest.
 
 ## Kit: next
 
-1. **`kit/tools/sheet.py`: lettered contact sheets.** Drafts tiled with the shot id and a letter in each tile
-   (`3-drive A/B/C/D`) and the subtitle line printed on the sheet; per-act storyboard (C3) and animatic (C5) sheets
-   from `render stills`. Every checkpoint depends on it; unlabelled tiles caused a pick on the wrong image
-   (Lantern Cantor).
+1. **Checkpoint sheets, the rest.** `kit/tools/sheet.py` now tiles lettered drafts per row (Puff Ahoy). Still
+   missing: the subtitle line printed under a tile, and per-act storyboard (C3) and animatic (C5) sheets straight
+   from `render stills`, lettered per shot. Unlabelled tiles caused a pick on the wrong image (Lantern Cantor).
 2. **Subtitles in the kit.** A helper that draws burned-in subtitles from the word timings, on by default
    (project.json switch), with a style option and safe-area placement. Group phrases on a speaker tag plus its
    quote, not only on pauses ("The ring texted:" + "Maybe don't."). A `--subs` listing for C5.
@@ -25,39 +24,52 @@ the evidence is noted per item. Add new items during a film's harvest.
 5. **Overlay helpers in core:** `plate_mask(...)`, a `grid` stills mode for measuring coordinates, and an
    `on_plate(layer_fn)` pattern (draw before the camera). Today they live as code in
    `skill/cookbook/plate-overlays.md`.
-6. **A preview encode in `finish`** (`--preview`: CRF 26 copy), and naming the output after the title instead of
+6. **Cues on the music grid.** Cue specs that need no voice line: `"M:bar7"`, `"M:beat25"`, `"M:clack"` from
+   `assets/music/*.beats.json` (`kit/tools/beats.py`) and named events in project.json, so `s.c()` and `sfx[].at`
+   work for wordless films. Puff Ahoy kept the grid as constants in shots.py and film seconds in project.json.
+7. **`animkit.cel`: the cel compositor** from `skill/cookbook/cel-animation.md` (`pose`, `cam_m`, `blit` with mip
+   levels, a cairo matrix helper, riders on a parent cel, the waterline mask), so cartoon films stop copying it.
+8. **Expected warnings in `finish`.** A project.json list of deliberate checks (`"expect": ["flash@2.17",
+   "starts_bright"]`) printed as expected in checks.txt, instead of being explained in the README by hand (an iris
+   opening onto a bright scene; a title card at frame 0).
+9. **A preview encode in `finish`** (`--preview`: CRF 26 copy), and naming the output after the title instead of
    the slug.
 
 ## Kit: later
 
-7. **An optional instability (glitch) module**, ported from `Initial Condition/film/post.py`: levels 0-3 per shot
+10. **An optional instability (glitch) module**, ported from `Initial Condition/film/post.py`: levels 0-3 per shot
    from project.json, protected windows, an `events.json` that `animkit.mix` turns into glitch sounds, with a palette
    guard after the pass. Lessons in `skill/cookbook/instability-glitch.md`.
-8. **A scaffold command** (`kit/tools/new_film.py <Title>`): the folder, the templates and the kit snapshot in one
+11. **A scaffold command** (`kit/tools/new_film.py <Title>`): the folder, the templates and the kit snapshot in one
    step, replacing the shell lines in SKILL.md.
-9. **Second picture backends** (from `reports/Animation frameworks for AI agents.md`): HyperFrames (pinned) for
+12. **Second picture backends** (from `reports/Animation frameworks for AI agents.md`): HyperFrames (pinned) for
    kinetic type, charts and diagrams, rendered to frames on the same segment grid and through the same post pass;
    then a local-video skill (Wan 2.2 / LTX-2.x via ComfyUI) to animate plates and make transitions, never to carry
    the story; Blender 5.2 LTS later for real depth. Verify alpha output early.
 
 ## Local tools (report to their projects)
 
-10. **local-voice: `--bass` vs the "speech low under the bass" metric.** In the black wall Sonnet run the warning
+13. **local-voice: `--bass` vs the "speech low under the bass" metric.** In the black wall Sonnet run the warning
     stayed at -6, -8 and -12 on ai-choir takes. Either the metric measures something the shelf can't reach (layers
     or echo), or the flag isn't applied before the check.
-11. **local-voice: echo-tail trimming** for long-tail presets (ai-choir adds about 2 s per line): a `--tail <s>`
+14. **local-voice: echo-tail trimming** for long-tail presets (ai-choir adds about 2 s per line): a `--tail <s>`
     option, or trim to the last word + N s in `animkit.mix`.
-12. **local-image: `--cancel`** (wraps `POST /interrupt`) and a progress readout; a warning before 4+ `--edit`
+15. **local-image: `--cancel`** (wraps `POST /interrupt`) and a progress readout; a warning before 4+ `--edit`
     references at `--scale 1328` on a 16 GB card (it stalls in `cudaMallocAsync`).
-13. **local-image: exact-size delivery** (1920x1080 without a cover-fit crop).
+16. **local-image: exact-size delivery** (1920x1080 without a cover-fit crop). Edits at `--scale 1328` of a 1664x928
+    plate came back 1792x992 (Puff Ahoy), so an edited plate's aspect drifts too.
+17. **local-image: `cutout.py` on inked cels.** On drawings over a cream background it keys the colour everywhere and
+    cut out the doll's skin and hair, a face and white gloves (Puff Ahoy). A flood-from-the-border mode, as in
+    `kit/tools/cel_matte.py`, would fix it in the tool.
 
 ## Benchmarks
 
-14. **Finish the agent benchmark** (plan in the frameworks report, "Testing the agents fairly"): three runs per arm,
+18. **Finish the agent benchmark** (plan in the frameworks report, "Testing the agents fairly"): three runs per arm,
     blind pairwise judging, the number of human notes to reach "good" as the main metric. Done so far: Ember and
     black wall, Haiku and Sonnet, one run each (`projects/_eval_*`). Still open: Opus; the local model (Qwen 27B)
     alone and as a shot worker under a Claude director (Track C: ten well-specified shot functions); runs with and
     without the skill.
-15. **A checkpoint benchmark:** the same brief with and without C1-C5, counting notes after the draft. Lantern
+19. **A checkpoint benchmark:** the same brief with and without C1-C5, counting notes after the draft. Lantern
     Cantor's estimate: most of ~17 post-draft notes would move to checkpoints, for 10-15 min of the user's attention
-    up front instead of ~2 h of fix rounds.
+    up front instead of ~2 h of fix rounds. Puff Ahoy (C1 + C3 + C4): 5 notes at the storyboard, none after the
+    draft.

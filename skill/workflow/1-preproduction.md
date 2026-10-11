@@ -9,7 +9,7 @@ and a few words of why). Skip what the user already said. Pick from this bank:
 
 | Topic | Ask about |
 | --- | --- |
-| Tone limits | What's off-limits (religious symbols, gore, edginess); how far the humour goes. |
+| Tone limits | What's off-limits (religious symbols, gore, edginess); how far the humour goes. For a risqué idea, offer stagings that keep the gag and show nothing (Puff Ahoy: "topless on deck" became a top blown off as two scallops cover her in the same frame; the user picked it over "face-down" and "keep the bikini"). |
 | Story staging | How the twist is revealed and when; whether a character shows key attributes from the start or only at the reveal. |
 | Ending | How it ends (on black, on a gag, on a hug, on the title). |
 | Length and pace | Target length; how many words that allows at the voice's pace (below). |
@@ -41,6 +41,14 @@ voice", then "make it 10% faster"). Ask which rules are fixed, and treat the res
 - **For comedy, write the intent per beat:** the setup, the punchline, and the twist with the word that reveals it.
 
 When the user says "go", lock the script word for word in BRIEF.md, marked APPROVED.
+
+**A film without words** gets a beat sheet instead: one row per shot with its bars, time, what happens and the
+sounds, at the music's planned tempo (120 BPM: a 4/4 bar is 2 s, a 20 s film is 10 bars). It is locked the same way,
+then re-timed to the chosen take's real grid (Puff Ahoy: one beat sheet, "go" on the first version).
+
+**Named characters from other works** (the user asks for a famous hero or a branded doll): translate them into
+looks at once ("a caped vigilante in a bat-eared cowl", "a blonde fashion doll"), say so in C0, and leave logos
+and emblems out; a generated chest emblem was erased with one edit (Puff Ahoy).
 
 ## The brief (`BRIEF.md`)
 
@@ -106,7 +114,9 @@ while scene batches ran with the old reference; each batch was relaunched.
 ## C3: the storyboard
 
 One draft frame per shot (`--preview`, about 1024 px wide), numbered, with the subtitle line under each and the
-planned gags or beats listed per shot. The user answers per shot: keep / change / their idea. Ideas you have go in as
+planned gags or beats listed per shot. **When the picture is composited from cut-outs**, build the storyboard with
+the real compositor from the C1 picks instead (`render sample --per 3`): it costs no GPU, the frames become the
+animatic, and the notes are concrete (Puff Ahoy: 5 notes on the first storyboard, none on the draft). The user answers per shot: keep / change / their idea. Ideas you have go in as
 options ("the ring lands as the O of the title: yes or no?"), never silently.
 
 For a longer film, also write `storyboard.md` in this section order (short pieces need a fraction of it):

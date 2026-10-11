@@ -39,6 +39,7 @@ Python 3.13 with pycairo, numpy, OpenCV, Pillow, scipy, soundfile and pyloudnorm
 | An approved script | C0 | Mark the script APPROVED in BRIEF.md; never rewrite it silently. |
 | A finished soundtrack (voice + music mix) | C0, then pictures | The "from a finished soundtrack" mode in [animation](workflow/3-animation.md#from-a-finished-soundtrack). |
 | An audio-first piece (the sound drives the film) | C0, then an audio session | Make the soundtrack first, hand over three files, then animate: [assets](workflow/2-assets.md#audio-first-two-sessions). |
+| A wordless piece (music and effects only) | C0, a beat sheet, then the music | The "script" is a beat sheet in bars; pick the music by ear first, then cut every shot and gag on its beat grid: [animation](workflow/3-animation.md#timed-on-the-music-no-voice). |
 | An existing film and notes | The notes loop | [review](workflow/4-review.md#the-notes-loop). |
 | Frozen assets (a benchmark) | The animation | Don't generate assets; follow the brief's hard requirements. |
 

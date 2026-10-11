@@ -29,6 +29,9 @@ python -m animkit.finish "$FILM"                     # final mp4 + contact sheet
 - **Run every command in the foreground and wait.** Never end a turn with a render running in the background.
 - A full render of a 72 s film takes about 2.5 min with 5 workers; a partial re-render 0.5-1.5 min. Renders are cheap;
   review rounds with the user are expensive.
+- Helpers in `kit/tools/` (run as scripts): `sheet.py` (lettered checkpoint sheets), `cel_matte.py` (cut-outs of
+  inked cels), `beats.py` (a music file's beat grid, with local-music's interpreter), `words.py` (word timings, with
+  local-voice's interpreter).
 
 ## project.json
 
@@ -64,6 +67,17 @@ When the audio is already mixed (voice + music), it is **one line** and the shot
 - sound effects on word cues of that one line: `"L1:sure#2"`, `"L1:Amen+3.4"`, `"L1:up-0.1"`, or plain seconds
 - **no `music` entry** (it's in the mix); set `"lufs"` to the soundtrack's level (e.g. -14)
 - cut shots on the bar grid in CUES.md where the music has a pulse
+
+### Timed on the music (no voice)
+
+A wordless film has no lines to cue on, so the music's grid is the timeline (Puff Ahoy):
+
+- `"lines": []`; every shot has a `dur` that ends on a downbeat (cuts at 2.0833 s land within a frame of a 2.07 s
+  downbeat); `"duration"` is the music's last hit plus its tail; the music in `"music"` at `gain_db` 0.
+- Copy the beats and the named events from `kit/tools/beats.py` into constants at the top of shots.py and work in
+  film seconds: `t = s.gf / FPS`. Name every event (`CUE = dict(blow=12.074, clack=12.585, ...)`), so a gag is
+  moved in one place. A `bump(t)` that is 1 on each beat and decays over 0.2 s gives the bounce to the music.
+- Sound effects take seconds in `"at"`, from the same constants.
 
 ## Writing shots.py
 
@@ -163,5 +177,9 @@ timings. Group phrases on the speaker tag and its quote, not only on pauses. Sho
   last pass (a "palette guard").
 - Never run two renders of one film at once, and never edit code a running render imports (it may pick up the
   change halfway). Wait for one job to finish before the next.
+- **A grade that lifts black** (a film base, a fog) fails `finish`'s "ends on black": after the last fade, return
+  a true black frame without the grade (Puff Ahoy: last frame 0.030, then 0.012).
+- **Gate every effect to its window.** An iris applied all shot long at its "open" radius blacked out the far side
+  of the frame, because the radius was smaller than the distance to the farthest corner.
 - Windows shell: long heredocs with nested quotes break. Write patches and long text to a file with the editor tool,
   then run it. Pipes hide failures: `cmd || { echo FAILED; exit 1; }`.

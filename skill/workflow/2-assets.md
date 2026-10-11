@@ -80,6 +80,11 @@ $PY $M --export <final ref> --out "$FILM/source"            # keep the final and
   section words were lost ("Lord" heard as "nor"), at -6 dB 97% were heard. When in doubt, transcribe the final mix.
 - **Polish in the mix:** a light room reverb if the dry voice sounds "too dry"; `boost` a held last word (+4 dB).
 - **Before any cleanup, `--export` the final**, so a later tweak still has its sources.
+- **When the music leads (no voice)**, ask for its ending in the prompt with `--fade-out 0`: "ending on a big band
+  button chord" gave a real button (a 0.2 s silence, then one hit) to close the iris on (Puff Ahoy: 2 prompts x 6
+  takes, 3 sent, the user picked the recommended one). Then map its grid with `kit/tools/beats.py` (run with
+  local-music's interpreter): bars, bar lengths (an accelerando shows as shorter bars), silences, hits, as a CUES.md
+  table.
 
 ## Plates and references (local-image)
 
@@ -116,6 +121,18 @@ python $G "<object>" --cutout --size 1024x1024 --preview --count 2 --out <dir>  
 If a plate fails, **regenerate with a changed prompt** (after two rounds, change the prompt, not just the seed);
 don't patch it in code.
 
+**Characters as cut-out cels** (cartoon films; recipe: [cel-animation](../cookbook/cel-animation.md)):
+- Make every pose an edit of the C1 pick on its plain cream background; the edits keep the geometry, so full-canvas
+  cels swap in place.
+- Matte them with `kit/tools/cel_matte.py`, not local-image's `cutout.py`, which cut pale insides (skin, blonde hair,
+  a face, white gloves) out of inked cels over cream (Puff Ahoy). Gaps between spokes: `--pocket 150`; a white bird
+  with a thin outline: `--tol 12 --fill`.
+- Small facial motion (pupils) barely changes in an edit; draw it in code.
+- **Matched plates:** make the second plate an edit of the first ("pull the camera far back to a wide view of the
+  same scene ... the same rock now small at the lower left"). Wide and close plates generated separately didn't
+  match, and the user asked for the wide one again from the close pick.
+- Lettered checkpoint sheets: `python kit/tools/sheet.py OUT.jpg "Spoon" drafts/c1_spoon -- "Ship" drafts/c1_ship`.
+
 **Limits and operations (16 GB card):**
 - At most **3 `--edit` references at `--scale 1328`**; 4 stalled for 20 minutes in `cudaMallocAsync`. Describe a
   4th reference in words. 3 references take about 2.5 min.
@@ -136,7 +153,12 @@ $PY $S --batch "$FILM/gen/sfx.json" --out "$FILM/assets/sfx/gen" --dry-run     #
 - **Restraint by default:** few effects, soft (`gain_db` -12 to -22), never competing with the voice; ambiences
   fade in and out. One author removed most effects from a film and disliked cartoon boings and swooshes at
   transitions. A comedy may want exactly those: STYLE.md decides.
-- Prefer a cue sheet (`--batch`) for more than a few sounds.
+- Prefer a cue sheet (`--batch`) for more than a few sounds. Puff Ahoy's 18 cartoon cues ran in about 45 s.
+- **Name a concrete source and action.** "Sail filling with wind, deep cloth whump" came back near silent (CLAP
+  heard silence); "loud whoomp of a big canvas sail snapping taut in a sudden strong wind" worked.
+- A "tail is chopped" warning means a longer `--duration`. Trim and fade the picks to their beat with a small
+  `gen/sfx_prep.py` (source take, start, length, fade) into `assets/sfx/`, and keep every take in `assets/sfx/gen/`.
+- Levels that worked in a comedy with the music at 0 dB: hits and gags -4 to -9 dB, a gull -13, sea lapping -20.
 
 ## Licences
 
