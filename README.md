@@ -9,8 +9,28 @@ Make short animated films with a coding agent, on one local GPU, with a human ar
 - **The engine** (`kit/animkit`) makes the picture as code: one Python function per shot (pycairo + numpy +
   OpenCV), timing from word-level timestamps of the voice, a stills mode for review (the agent can't watch video),
   segment rendering, a mixer, and automatic checks.
-- **Assets** come from local open-weights models through separate skills: speech (local-voice), music
-  (local-music), images (local-image) and sound effects (local-sounds). They are not part of this repository.
+- **Assets** come from local open-weights models through companion tools, each its own repository and Claude Code
+  skill (below). Models are downloaded by their installers; none are in this repository.
+
+## Requirements
+
+Windows 11 with an NVIDIA GPU (16 GB was enough for every tool, one at a time), Python 3.13 with pycairo, numpy,
+OpenCV, Pillow, scipy, soundfile and pyloudnorm, ffmpeg on PATH, and Claude Code. The companion tools, each
+installed as a skill under `~/.claude/skills/<name>` (see each one's README):
+
+| Tool | What it makes |
+| --- | --- |
+| [local-voice](https://github.com/vl3c/local-voice) | speech in a designed voice, machine and creature effects, word timings and subtitles |
+| [local-music](https://github.com/vl3c/local-music) | instrumental music beds and stems, voice-over-music mixes |
+| [local-image](https://github.com/vl3c/local-image) | background plates, character and prop references, multi-reference edits, cut-outs |
+| [local-sounds](https://github.com/vl3c/local-sounds) | sound effects and ambiences, frame-ready, from a cue sheet |
+| [local-gpu](https://github.com/vl3c/local-gpu) | which tool holds the GPU, and switching between them |
+
+Then link this repository's skill (PowerShell):
+
+```powershell
+New-Item -ItemType Junction -Path "$HOME\.claude\skills\animate" -Target "<this repo>\skill"
+```
 
 ## Films made with it
 
