@@ -1,0 +1,23 @@
+{
+ "title": "Ember",
+ "duration": 20.0,
+ "end_fade": 1.5,
+ "grain": 0.02,
+ "lines": [
+  {"id": "L1", "text": "Before the first fire, night was a wall.", "audio": "assets/vo/L1.wav", "words": "assets/vo/L1.words.json"},
+  {"id": "L2", "text": "Then a spark fell into dry grass,", "audio": "assets/vo/L2.wav", "words": "assets/vo/L2.words.json"},
+  {"id": "L3", "text": "and the dark stepped back.", "audio": "assets/vo/L3.wav", "words": "assets/vo/L3.words.json"},
+  {"id": "L4", "text": "We have fed it ever since.", "audio": "assets/vo/L4.wav", "words": "assets/vo/L4.words.json"}
+ ],
+ "shots": [
+  {"id": "1", "lines": ["L1"], "pre": 1.2, "post": 0.3, "fade_in": 1.0},
+  {"id": "2", "lines": ["L2"], "pre": 0.3, "post": 0.6},
+  {"id": "3", "lines": ["L3"], "pre": 0.2, "post": 0.9, "fade_out": 0.5},
+  {"id": "4", "lines": ["L4"], "pre": 0.9, "post": 1.5, "fade_in": 0.8}
+ ],
+ "sfx": [
+  {"file": "assets/sfx/wind.wav", "at": 0.0, "gain_db": -20, "fade_in": 1.5, "fade_out": 2.5},
+  {"file": "assets/sfx/ignite.wav", "at": "L2:grass", "gain_db": -12},
+  {"file": "assets/sfx/whoosh.wav", "at": "L3:stepped-0.15", "gain_db": -15}
+ ]
+}

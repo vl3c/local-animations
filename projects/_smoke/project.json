@@ -1,0 +1,36 @@
+{
+ "title": "Smoke",
+ "duration": 5.0,
+ "end_fade": 1.0,
+ "grain": 0.02,
+ "lines": [
+  {
+   "id": "L1",
+   "text": "hello world.",
+   "audio": "assets/vo/L1.wav",
+   "words": "assets/vo/L1.words.json"
+  }
+ ],
+ "shots": [
+  {
+   "id": "1",
+   "lines": [
+    "L1"
+   ],
+   "pre": 0.5,
+   "post": 0.3,
+   "fade_in": 0.5
+  },
+  {
+   "id": "2",
+   "dur": 2.0
+  }
+ ],
+ "sfx": [
+  {
+   "file": "assets/sfx/tick.wav",
+   "at": "L1:world",
+   "gain_db": -6
+  }
+ ]
+}

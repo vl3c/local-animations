@@ -1,0 +1,13 @@
+{
+ "title": "Title",
+ "end_fade": 1.5,
+ "grain": 0.02,
+ "lufs": -16,
+ "lines": [
+  {"id": "L1", "text": "The first line.", "audio": "assets/vo/L1.wav", "words": "assets/vo/L1.words.json"}
+ ],
+ "shots": [
+  {"id": "1", "lines": ["L1"], "pre": 1.0, "post": 0.6, "fade_in": 1.0}
+ ],
+ "sfx": []
+}
