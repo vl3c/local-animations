@@ -80,6 +80,7 @@ ALLOWED = [
     "@users.noreply.github.com",
     "C:\\Users\\<you>",
     "C:\\Users\\you",
+    "\\Users\\you",
     "127.0.0.1",
     "0.0.0.0",
     # four-part version numbers, not addresses: glaxnimate (research notes), OpenCV (requirements-ci.txt).
