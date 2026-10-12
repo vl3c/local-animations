@@ -13,6 +13,8 @@ the animkit engine, benchmarks and research. Films themselves are made in `../An
 | `projects/` | Benchmarks: `_frozen/` (inputs), `_smoke/` (kit test), runs and `_eval_*` (evaluations). See its README. |
 | `reports/`, `research_notes/` | The framework survey (Oct 2026) and its notes. |
 | `BACKLOG.md` | What isn't built yet, prioritized. |
+| `scripts/check_repo_safe.py` | The pre-publish safety scan (tracked files and history). |
+| `.github/workflows/tests.yml` | CI: the smoke render and the safety scan. Its `tests` job is the required check on `main`. |
 
 ## The skill is linked, not copied
 
@@ -52,8 +54,12 @@ New-Item -ItemType Junction -Path "$HOME\.claude\skills\animate" -Target "<repo>
 
 It may become public. Never commit personal information: no absolute paths with a user name (use `~`, `$REPO`,
 relative paths), no emails, no names of private people, no credentials. Generated media, renders and caches stay
-out of git (see `.gitignore`): no model output is committed, not even benchmark inputs. Before pushing, scan:
+out of git (see `.gitignore`): no model output is committed, not even benchmark inputs. Before pushing, scan (CI runs
+the same):
 
 ```bash
-git grep -n -I -i -E 'users[/\\][a-z0-9]+|@gmail|@[a-z0-9-]+\.(com|ro)|api[_-]?key|token|password' -- . ':!*.lock'
+python scripts/check_repo_safe.py --history
 ```
+
+A false positive (a version number read as an IP address) goes into the script's `ALLOWED` list, not a weaker
+pattern. `main` is protected: changes land by pull request once `tests` passes, and auto-merge is on.
