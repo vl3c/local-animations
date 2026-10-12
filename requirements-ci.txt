@@ -1,0 +1,9 @@
+# What CI needs to render the smoke project: the kit's dependencies, without the GPU tools
+# (kit/tools/upscale.py, words.py and friends run in their own environments).
+pycairo==1.29.1
+numpy==2.3.4
+opencv-python-headless==5.0.0.93
+pillow==12.1.1
+scipy==1.18.0
+soundfile==0.14.0
+pyloudnorm==0.2.0
