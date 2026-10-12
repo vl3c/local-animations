@@ -25,11 +25,11 @@ jobs:
       run:
         shell: bash
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0  # the safety scan reads every commit
           persist-credentials: false
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.13"
           cache: pip
@@ -38,7 +38,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install -r requirements-ci.txt
-          command -v ffmpeg || choco install ffmpeg -y --no-progress
+          choco install ffmpeg --version 8.1.2 -y --no-progress  # pinned: a new release must not change results
       - name: Kit and tools compile
         run: python -m compileall -q kit projects/_smoke
       - name: Smoke render (stills, segments, mix, finish)
@@ -50,6 +50,6 @@ jobs:
           python -m animkit.render "$T" stills 1:0.5 2:50%
           python -m animkit.render "$T" all --workers 2
           python -m animkit.mix "$T"
-          python -m animkit.finish "$T"
+          python -m animkit.finish "$T" --strict
       - name: Pre-publish safety scan (files and history)
         run: python scripts/check_repo_safe.py --history

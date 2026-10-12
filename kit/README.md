@@ -8,7 +8,7 @@ python -m animkit.finish FILM --info       # the timeline and every word's time
 python -m animkit.render FILM stills 1:0.5 # frames to look at
 python -m animkit.render FILM all          # the picture
 python -m animkit.mix FILM                 # the soundtrack
-python -m animkit.finish FILM              # the mp4, contact sheet and checks
+python -m animkit.finish FILM              # the mp4, contact sheet and checks (--strict: exit 1 on a WARNING)
 ```
 
 The guide (project.json, the shot API, the review loop) is in the `animate` skill: `skill/workflow/3-animation.md`

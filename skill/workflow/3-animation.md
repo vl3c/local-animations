@@ -20,6 +20,7 @@ python -m animkit.render "$FILM" all --workers 4     # silent picture -> build/p
 python -m animkit.render "$FILM" all --redo 2,3      # only the segments covering shots 2 and 3
 python -m animkit.mix "$FILM"                        # soundtrack -> build/mix.wav at project.json "lufs"
 python -m animkit.finish "$FILM"                     # final mp4 + contact sheet + automatic checks
+                                                     #   (--strict: exit 1 on any WARNING, for CI)
 ```
 
 - Stills land in `output/stills/` with a labelled sheet (`sheet.jpg` from `stills`, `sample_sheet.jpg` from
