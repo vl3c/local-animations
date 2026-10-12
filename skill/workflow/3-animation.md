@@ -31,7 +31,9 @@ python -m animkit.finish "$FILM"                     # final mp4 + contact sheet
   review rounds with the user are expensive.
 - Helpers in `kit/tools/` (run as scripts): `sheet.py` (lettered checkpoint sheets), `cel_matte.py` (cut-outs of
   inked cels), `beats.py` (a music file's beat grid, with local-music's interpreter), `words.py` (word timings, with
-  local-voice's interpreter).
+  local-voice's interpreter), `upscale.py` (4x Real-ESRGAN plates for deep push-ins, with local-image's ComfyUI
+  interpreter; see [continuous-journey](../cookbook/continuous-journey.md)), `kicks.py` (every kick's attack, with
+  local-music's interpreter), `sync_check.py` (pulses vs kicks, measured on the encode).
 
 ## project.json
 
@@ -76,8 +78,23 @@ A wordless film has no lines to cue on, so the music's grid is the timeline (Puf
   downbeat); `"duration"` is the music's last hit plus its tail; the music in `"music"` at `gain_db` 0.
 - Copy the beats and the named events from `kit/tools/beats.py` into constants at the top of shots.py and work in
   film seconds: `t = s.gf / FPS`. Name every event (`CUE = dict(blow=12.074, clack=12.585, ...)`), so a gag is
-  moved in one place. A `bump(t)` that is 1 on each beat and decays over 0.2 s gives the bounce to the music.
+  moved in one place. A `bump(t)` that is 1 on each kick (from `kicks.json`, below) and decays over 0.2 s gives
+  the bounce to the music.
 - Sound effects take seconds in `"at"`, from the same constants.
+
+Lessons from Church of Superintelligence (a tech-house track):
+
+- **Check the tempo octave.** `beats.py` (librosa) can lock onto half time: Church of Superintelligence read 64 BPM
+  for a 127.84 BPM track. Find the sections from band levels (its bass entered at 15.0 s and the hats lifted at
+  30.0 s, which became the film's two big reveals).
+- **Pulses on the beat come from the kicks, not from a grid.** `kit/tools/kicks.py` (local-music's interpreter)
+  lists every kick's attack in the waveform and draws them on it; drive every pulse from that list, firing half a
+  frame before the kick so the nearest frame shows its peak. Use `--end-after T` where the drums stop. A fitted grid drifted 20-40 ms by mid-film and the user saw it ("the pulsing gets desynced"); a
+  "refit" made it worse. Then measure on the encode: `kit/tools/sync_check.py <film.mp4> <music>.kicks.json`
+  (Church of Superintelligence: 1 ms median, -16..18 ms; `--shift` if the music doesn't start the film) and send
+  its chart with the cut.
+- **Where the music's drums stop, the pulse should too**, or run down: `kicks.py --slow-to T` adds pulses that come
+  further apart and fade (the user asked for it on that film's outro).
 
 ## Writing shots.py
 
@@ -177,6 +194,9 @@ timings. Group phrases on the speaker tag and its quote, not only on pauses. Sho
   last pass (a "palette guard").
 - Never run two renders of one film at once, and never edit code a running render imports (it may pick up the
   change halfway). Wait for one job to finish before the next.
+- **Measure motion you can't watch:** read the encode back, frame-difference it at 480x270 and list the biggest
+  diffs; it found a pan four times the film's median motion (Church of Superintelligence). A fast pan over faces
+  smears at 24 fps: a quarter-frame horizontal blur helps; averaging sub-frames makes a comb.
 - **A grade that lifts black** (a film base, a fog) fails `finish`'s "ends on black": after the last fade, return
   a true black frame without the grade (Puff Ahoy: last frame 0.030, then 0.012).
 - **Gate every effect to its window.** An iris applied all shot long at its "open" radius blacked out the far side

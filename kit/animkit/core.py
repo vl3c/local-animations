@@ -320,9 +320,15 @@ def memo(name, fn):
     if os.path.exists(p):
         v = np.load(p).astype(np.float32)
     else:
-        v = np.asarray(fn(), np.float32)
-        np.save(p + ".tmp.npy", v.astype(np.float16))
-        os.replace(p + ".tmp.npy", p)
+        # the value returned is the one stored (float16), so a frame renders the same whether this process built
+        # the entry or read it from disk (renders were not reproducible: cloud edges flipped between workers)
+        v = np.asarray(fn(), np.float32).astype(np.float16).astype(np.float32)
+        tmp = f"{p}.{os.getpid()}.tmp.npy"  # per process: parallel workers may build the same entry at once
+        np.save(tmp, v.astype(np.float16))
+        try:
+            os.replace(tmp, p)
+        except PermissionError:  # Windows: another worker's file is in place (or being read); keep that one
+            os.remove(tmp)
     _MEMO[name] = v
     return v
 

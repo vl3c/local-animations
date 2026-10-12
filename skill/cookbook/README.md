@@ -14,6 +14,7 @@ starting points; make them the film's own. Add new ones during the [harvest](../
 | [palette-rules](palette-rules.md) | checking and guarding palette rules (forbidden hues, rationed colours) | any with colour rules | Initial Condition |
 | [cel-animation](cel-animation.md) | characters as generated cut-out cels: pose variants by edits, a matrix compositor, replacement timing, riders on a vehicle, eye darts | cartoon, comedy, rubber-hose | Puff Ahoy |
 | [vintage-film](vintage-film.md) | two-strip colour grade, gate weave, flicker, iris in and out, true black at the end | cartoon, vintage | Puff Ahoy |
+| [continuous-journey](continuous-journey.md) | one unbroken zoom through generated plates: 4x Real-ESRGAN plates, scale-matched plates, cloud/vapour/wash transitions, billowing only the colour, holds on a fast pan | painterly, atmospheric, any | Church of Superintelligence |
 
 Style tags in use: `painterly`, `atmospheric`, `cartoon`, `comedy`, `rubber-hose`, `vintage`, `cyberpunk`, `machine`,
 `glitch`, `any`.

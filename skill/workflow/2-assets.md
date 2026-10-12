@@ -133,6 +133,21 @@ don't patch it in code.
   match, and the user asked for the wide one again from the close pick.
 - Lettered checkpoint sheets: `python kit/tools/sheet.py OUT.jpg "Spoon" drafts/c1_spoon -- "Ship" drafts/c1_ship`.
 
+**A film that moves through scales** (orbit → desert → building → faces → blood; recipe:
+[continuous-journey](../cookbook/continuous-journey.md)):
+- **Lock the recurring object first, then make every other scale an edit of that locked image** ("show this same
+  building from much higher up"). A wider view painted first and cropped into did not match the locked building,
+  twice ("not accurate, has to be consistent").
+- **For a closer view of the same plate, crop it and upscale it 4x** (`kit/tools/upscale.py`, Real-ESRGAN). The user
+  picked the plain crop over repainted crops, which moved coastlines and solar fields; a 4x plate also lets the
+  camera push in ~3.7x on real pixels.
+- **The model anchors on what is already there.** Four edits asking for smaller solar panels kept their size; edits
+  that add something new (oceans, haze, a horizon glow, more fields) worked first time.
+- **Show style options at every scale,** not on one key frame: the user may pick a different look per scale, and
+  state the film's rule from what they see (Church of Superintelligence; see the recipe).
+- Two `--edit` references at `--scale 1328` took about 2 min per image while a CPU upscale ran beside it; batch the
+  edits, and upscale on the GPU (seconds) when the image server is idle.
+
 **Limits and operations (16 GB card):**
 - At most **3 `--edit` references at `--scale 1328`**; 4 stalled for 20 minutes in `cudaMallocAsync`. Describe a
   4th reference in words. 3 references take about 2.5 min.
@@ -159,6 +174,10 @@ $PY $S --batch "$FILM/gen/sfx.json" --out "$FILM/assets/sfx/gen" --dry-run     #
 - A "tail is chopped" warning means a longer `--duration`. Trim and fade the picks to their beat with a small
   `gen/sfx_prep.py` (source take, start, length, fade) into `assets/sfx/`, and keep every take in `assets/sfx/gen/`.
 - Levels that worked in a comedy with the music at 0 dB: hits and gags -4 to -9 dB, a gull -13, sea lapping -20.
+- **Music-led films want fewer effects than you think.** On a tech-house film the user removed both transition
+  whooshes (one "sounds like a closing door") and found a breath on a dying character "a bit kitsch" until it sat
+  ~20 LU under the music (gain -19 dB on a -16 LUFS take). Ambience beds and a heartbeat on the kicks stayed.
+- **Two copies of one loop crossfading** read as a whoosh where they overlap: extend one copy instead.
 
 ## Licences
 

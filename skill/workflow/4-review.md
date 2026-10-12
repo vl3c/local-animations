@@ -82,5 +82,14 @@ For each note:
 5. Re-render only the touched shots (`all --redo 3,7`), mix, finish.
 6. Report what changed, briefly. Log each note and its fix in DECISIONS.md.
 
+- **Number the cuts:** name each sent preview with its version (`<Title> v3 (preview).mp4`). A note about a sound
+  already removed came from an older copy the user was still watching, and an approved sound was taken out because
+  of it.
+- **Reviewing from a phone:** when the user is remote, send only the preview (15 MB) and one proof image per hard
+  fix (a sync chart, a mid-transition frame), not sheets.
+- **Don't morph generated art to align it.** Align rigidly (scale and shift) and let a short fade carry the rest: a
+  homography morph that aligned two views perfectly was rejected at once ("it changes geometry by melting it")
+  (Church of Superintelligence).
+
 Batch notes into one re-render where you can: each round costs the user a viewing. If notes after C6 are mostly
 design notes, a checkpoint was skipped or rushed; note it for the harvest.
