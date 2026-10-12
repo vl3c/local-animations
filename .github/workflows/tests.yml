@@ -27,6 +27,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          fetch-depth: 0  # the safety scan reads every commit
           persist-credentials: false
       - uses: actions/setup-python@v5
         with:
@@ -51,6 +52,4 @@ jobs:
           python -m animkit.mix "$T"
           python -m animkit.finish "$T"
       - name: Pre-publish safety scan (files and history)
-        run: |
-          git fetch --unshallow --quiet || true
-          python scripts/check_repo_safe.py --history
+        run: python scripts/check_repo_safe.py --history

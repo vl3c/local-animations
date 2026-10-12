@@ -81,7 +81,8 @@ ALLOWED = [
     "C:\\Users\\you",
     "127.0.0.1",
     "0.0.0.0",
-    # four-part version numbers, not addresses: glaxnimate (research notes), OpenCV (requirements-ci.txt)
+    # four-part version numbers, not addresses: glaxnimate (research notes), OpenCV (requirements-ci.txt).
+    # Keep both after a bump: history still holds them.
     "0.5.0.3",
     "5.0.0.93",
 ]
@@ -179,7 +180,7 @@ def main() -> int:
     if args.history:
         print("scanning commit history...")
         diff = subprocess.run(["git", "log", "-p", "--all", "--no-color"],
-                              cwd=repo, capture_output=True, text=True, errors="replace").stdout
+                              cwd=repo, capture_output=True, text=True, errors="replace", check=True).stdout
         hist: list[str] = []
         scan_text(diff, "<history>", hist)
         # History lines are noisy; dedupe by the finding itself.
