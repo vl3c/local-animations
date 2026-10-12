@@ -39,8 +39,9 @@ BANNED_NAMES = {".env", ".npmrc", ".netrc", "_netrc", "id_rsa", "id_ed25519"}
 ALLOWED_IMAGE_DIRS = ("docs/img/",)
 
 PATTERNS = [
-    # Local paths. Both separators, trailing slash optional.
-    ("Windows user path", re.compile(r"[A-Za-z]:[\\/]+Users[\\/]+[A-Za-z0-9._-]+", re.I)),
+    # Local paths. Both separators, trailing slash optional. The drive letter is optional too,
+    # since a path written "\Users\<name>" names the account as surely as "C:\Users\<name>".
+    ("Windows user path", re.compile(r"(?:[A-Za-z]:[\\/]+|\\+)Users[\\/]+[A-Za-z0-9._-]+", re.I)),
     ("UNC path", re.compile(r"\\\\[A-Za-z0-9._-]+\\[A-Za-z0-9._$-]+")),
     ("Unix home path", re.compile(r"/(?:home|Users)/[A-Za-z0-9._-]+")),
     # Identity. Local part must start alphanumeric, or a diff line like
@@ -79,6 +80,7 @@ ALLOWED = [
     "@users.noreply.github.com",
     "C:\\Users\\<you>",
     "C:\\Users\\you",
+    "\\Users\\you",
     "127.0.0.1",
     "0.0.0.0",
     # four-part version numbers, not addresses: glaxnimate (research notes), OpenCV (requirements-ci.txt).

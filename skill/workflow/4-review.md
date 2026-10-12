@@ -59,8 +59,10 @@ purpose.
 **Sort what you find** into "fix in code" and "regenerate the asset". Code can't save a weak plate: spend the
 remaining budget on regenerations.
 
-**Automatic checks** (`finish`): duration, loudness and peak, brightness jumps (FLASH/CUT warnings), ending on black,
-layout warnings. **Not automated yet** (BACKLOG): darkness, flash rate (at most 3 large flashes a second), palette
+**Automatic checks** (`finish`): duration (a WARNING when the mp4 and the timeline differ by more than 0.1 s: a stale
+picture or mix), loudness and peak, brightness jumps (FLASH/CUT warnings), ending on black, layout warnings.
+`finish --strict` exits 1 on any WARNING, so a film with a deliberate one (a smash-cut) fails it: use it for CI, not
+for such films. **Not automated yet** (BACKLOG): darkness, flash rate (at most 3 large flashes a second), palette
 rules, words lost in the speech band. If the film needs them, write a small script for the film, or check by eye and
 say so in the report.
 
